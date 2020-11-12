@@ -1,13 +1,14 @@
-function objectOmit<T>(obj: T, keys: Array<keyof T>): T {
-  let shallow = {
-    ...obj
-  };
+export default function omitKeys<T extends object = {}>(
+  obj: T,
+  excludeKeys: Array<keyof T>
+): Partial<T> {
+  let shallow: Partial<T> = {};
 
-  for (let key of keys) {
-    delete shallow[key]
-  };
+  for (let key in obj) {
+    if (!excludeKeys.includes(key)) {
+      shallow[key] = obj[key];
+    }
+  }
 
   return shallow;
 }
-
-export default objectOmit;
